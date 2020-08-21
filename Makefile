@@ -4,26 +4,27 @@ LDFLAGS := $(shell pkg-config --libs opencv4)  $(shell pkg-config --libs libopen
 TARGET := webcam
 CPP_FILES := $(wildcard *.cpp)
 INCLUDE_FILES := $(wildcard *.h)
-RM := rm
+BIN_DIR := bin
+RM := rm -f
 
 
 
 OBJ_FILES := $(patsubst %.cpp,%.o, $(CPP_FILES))
 
 
-all: $(TARGET)
+all: $(BIN_DIR)/$(TARGET)
 
 $(OBJ_FILES): %.o:%.cpp $(INCLUDE_FILES)  Makefile
 	$(CPP) -c $< $(CFLAGS)
 
-$(TARGET): $(OBJ_FILES)
-	$(CPP) -o $(TARGET) $(OBJ_FILES) $(LDFLAGS)
+$(BIN_DIR)/$(TARGET): $(OBJ_FILES)
+	$(CPP) -o $(BIN_DIR)/$(TARGET) $(OBJ_FILES) $(LDFLAGS)
 
 clean:
-	$(RM) $(TARGET) $(OBJ_FILES)
+	$(RM) $(BIN_DIR)/$(TARGET) $(OBJ_FILES)
 
-run: $(TARGET)
-	./$(TARGET)
+run: $(BIN_DIR)/$(TARGET)
+	./$(BIN_DIR)/$(TARGET)
 
 debug:
 	gdb $(TARGET)

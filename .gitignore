@@ -1,0 +1,5 @@
+modes.txt
+*.o
+webcam
+.vscode/**
+tmp/**
